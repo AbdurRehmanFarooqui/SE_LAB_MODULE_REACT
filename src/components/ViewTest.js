@@ -84,6 +84,7 @@ function ViewTest(prop) {
 
         fetchData();
     }, []);
+    
     const hide = {
         display: 'none'
     }
@@ -98,15 +99,10 @@ function ViewTest(prop) {
     }
     const openInvoiceHandle = async () => {
         try {
-            navigate(`/testorder/${prescriptionId}`);
-            const response = await fetch(`http://localhost:3000/prescription/${prescriptionId}`, {
+                const response = await fetch(`http://localhost:3000/invoice/${prescriptionId}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ prescriptionId })
             });
-            console.console.log(response);
+            console.log(response);
 
             if (!response.ok) {
                 throw new Error('Failed to send data to backend');
@@ -114,14 +110,16 @@ function ViewTest(prop) {
 
             const data = await response.json();
             console.log('Data sent successfully:', data);
+            // navigate(`/testorder/${prescriptionId}`);
+            window.open(`/invoice/${prescriptionId}`)
+
             // Handle success response from backend
         } catch (error) {
             console.error('Error sending data to backend:', error);
-            // Handle error
         }
 
 
-        window.open(`/invoice/${prescriptionId}`)
+
     }
     const navigate = useNavigate();
 

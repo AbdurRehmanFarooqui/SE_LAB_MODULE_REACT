@@ -40,11 +40,11 @@ function Card(prop) {
 
 
     return (<>
-        <h3>Pending Samples</h3>
+        <h3>{prop.heading}</h3>
         <div class="card1">
-            <p class="c1p1" style={(prop.right === 'inprocess' ? display : hide)} >NO. OF SAMPLES:&nbsp;&nbsp;<span style={{ color: 'white' }} id="noSample">{prop.noOfSamples}</span></p>
-            <p class="c1p1" style={(prop.right === 'pending' ? display : hide)}>SHIFT:&nbsp;&nbsp;<span style={{ color: 'white' }} id="shift">{Shift}</span></p>
-            <p class="c1p2" style={(prop.right === 'pending' ? display : hide)}>SAMPLE:&nbsp;&nbsp;<span style={{ color: 'white' }} id="Samples">{prop.noOfSamples}</span></p>
+            <p class="c1p1" style={(prop.right === 'inprocess' ? display : hide)} >NO. OF SAMPLES:&nbsp;&nbsp;<span style={{ color: 'white' }} id="noSample">{0+prop.noOfSamples}</span></p>
+            <p class="c1p1" style={(prop.right === 'pending' ? display : hide)}>SHIFT:&nbsp;&nbsp;<span style={{ color: 'white' }} id="shift">1</span></p>
+            <p class="c1p2" style={(prop.right === 'pending' ? display : hide)}>SAMPLE:&nbsp;&nbsp;<span style={{ color: 'white' }} id="Samples">{0+prop.noOfSamples}</span></p>
         </div>
         <p class="h2">SAMPLES</p>
     </>

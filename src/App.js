@@ -29,7 +29,8 @@ function App() {
 
 
           <Route exact path="/testorder-id" element={<>
-            <Sidebar dash='testorder' /><EnterID id='testorder'/>
+            <Sidebar dash='testorder' />
+            <EnterID id='testorder'/>
           </>} />
 
 
@@ -41,7 +42,8 @@ function App() {
 
           <Route exact path="/invoice-id" element={
           <>
-            <Sidebar dash='invoice' /><EnterID id='invoice'/>
+            <Sidebar dash='invoice' />
+            <EnterID id='invoice'/>
           </>} />
 
 
@@ -58,6 +60,11 @@ function App() {
             <RightSec right='inprocess' />
           </>} />
 
+          <Route exact path="/ai-id" element={
+          <>
+            <Sidebar dash='ai' />
+            <EnterID id='ai'/>
+          </>} />
 
         </Routes>
       </Router>

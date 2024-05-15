@@ -17,36 +17,58 @@ function RightSec(prop) {
     // }
     let side = prop.right;
     console.log(side)
+    // const [url, seturl] = useState([]);
     // style={(prop.right === "invoice" ? forInvoicePrint : display_it)}
 
     const [data, setData] = useState([]);
-    
+
     const [noOfSamples, setnoOfSamples] = useState([]);
+
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
+            if (prop.right === "inprocess") {
+                let url1 = 'http://localhost:3000/inprogressample';
+                try {
+                    console.log(url1);
+                    const response = await fetch(url1);
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch data');
+                    }
+                    // console.log(url);
+                    const jsonData = await response.json();
+                    setData(jsonData);
+                    console.log(jsonData)
+                    setnoOfSamples(Object.keys(jsonData).length);
+                    // console.log(noOfSamples)
 
-                const response = await fetch('http://localhost:3000/inprogressample');
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
+                } catch (error) {
+                    console.error('Error fetching data: ', error);
                 }
+            } else if (prop.right === "pending") {
+                let url2 = 'http://localhost:3000/inpendingsample';
+                try {
+                    console.log(url2);
+                    const response = await fetch(url2);
+                    if (!response.ok) {
+                        setData([]);
+                        setnoOfSamples([]);
+                        throw new Error('Failed to fetch data');
+                    }
+                    // console.log(url);
+                    const jsonData = await response.json();
+                    setData(jsonData);
+                    console.log(jsonData)
+                    setnoOfSamples(Object.keys(jsonData).length);
+                    // console.log(noOfSamples)
 
-                const jsonData = await response.json();
-                setData(jsonData);
-                console.log(jsonData)
-                setnoOfSamples(Object.keys(jsonData).length);
-                console.log(noOfSamples)
-
-
-            } catch (error) {
-                console.error('Error fetching data: ', error);
+                } catch (error) {
+                    console.error('Error fetching data: ', error);
+                }
             }
         };
-
         fetchData();
-    }, [noOfSamples]);
+    }, [noOfSamples, prop.right]);
 
 
     return (
@@ -59,14 +81,22 @@ function RightSec(prop) {
 
 
             {
-                (prop.right === 'pending' || prop.right === 'inprocess') && <><Card noOfSamples={noOfSamples} right={side}></Card>
-
+                prop.right === 'pending' && <><Card noOfSamples={noOfSamples} heading={'PENDING SAMPLES'} right={side}></Card>
                     <div className='samples'>
                         {data.map((item, index) => (
                             <Sample key={index} testID={item.SampleID} testName={item.Testname} right={prop.right} />
                         ))}
                     </div>
+                </>
 
+            }
+            {
+                prop.right === 'inprocess' && <><Card noOfSamples={noOfSamples} heading={'IN PROCESS SAMPLES'} right={side}></Card>
+                    <div className='samples'>
+                        {data.map((item, index) => (
+                            <Sample key={index} testID={item.SampleID} testName={item.Testname} right={prop.right} />
+                        ))}
+                    </div>
                 </>
 
             }
