@@ -8,45 +8,34 @@ function Card(prop) {
     const display = {
         visibility: 'visibile'
     }
-    // const [noSamp, setSamp] = useState([]);
-    const [Shift, setShift] = useState([]);
-    const [Samples, setSamples] = useState([]);
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             if (prop.right === 'inprocess') {
-    //                 var url="";
-    //             } else {
-    //                 url="";
-    //             }
-    //             const response = await fetch(url);
-    //             if (!response.ok) {
-    //                 throw new Error('Failed to fetch data');
-    //             }
-    //             const jsonData = await response.json();
-    //             if (prop.right === 'inprocess') {
-    //                 setSamp(jsonData);
-    //             } else {
-    //                 setSamples(jsonData);
-    //                 setShift(jsonData);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching data: ', error);
-    //         }
-    //     };
-    //     fetchData();
-    // }, [prop.right]);
-
-
+    const center = {
+        textAlign: 'center'
+    }
     return (<>
-        <h3>{prop.heading}</h3>
-        <div class="card1">
-            <p class="c1p1" style={(prop.right === 'inprocess' ? display : hide)} >NO. OF SAMPLES:&nbsp;&nbsp;<span style={{ color: 'white' }} id="noSample">{0+prop.noOfSamples}</span></p>
-            <p class="c1p1" style={(prop.right === 'pending' ? display : hide)}>SHIFT:&nbsp;&nbsp;<span style={{ color: 'white' }} id="shift">1</span></p>
-            <p class="c1p2" style={(prop.right === 'pending' ? display : hide)}>SAMPLE:&nbsp;&nbsp;<span style={{ color: 'white' }} id="Samples">{0+prop.noOfSamples}</span></p>
+        <h3 style={(prop.right === 'testinput' ? center : display)}>{prop.heading}</h3>
+        <div className="card1">
+
+            <p className="c1p1" style={(prop.right === 'inprocess' ? display : hide)} >NO. OF SAMPLES:&nbsp;&nbsp;<span style={{ color: 'white' }} id="noSample">{0 + prop.noOfSamples}</span></p>
+
+            <p className="c1p1" style={(prop.right === 'pending' ? display : hide)}>SHIFT:&nbsp;&nbsp;<span style={{ color: 'white' }} id="shift">1</span></p>
+            <p className="c1p2" style={(prop.right === 'pending' ? display : hide)}>SAMPLE:&nbsp;&nbsp;<span style={{ color: 'white' }} id="Samples">{0 + prop.noOfSamples}</span></p>
+
+            {
+                prop.right === 'testinput' && <>
+                    <p className="c1p1" style={(prop.right === 'testinput' ? display : hide)}>SAMPLE ID:&nbsp;&nbsp;<span style={{ color: 'white' }} id="shift">{prop.id}</span></p>
+                    <p className="c1p2" style={(prop.right === 'testinput' ? display : hide)}>TEST NAME:&nbsp;&nbsp;<span style={{ color: 'white' }} id="Samples">{prop.testname}</span></p>
+                </>
+            }
+
+            {
+                prop.right === 'report' && <>
+                    <p className="c1p1" >PRESCRIPTION ID:&nbsp;&nbsp;<span style={{ color: 'white' }} id="shift">{prop.presID}</span></p>
+                    <p className="c1p2" >PATIENT NAME:&nbsp;&nbsp;<span style={{ color: 'white' }} id="Samples">{prop.patientname}</span></p>
+                </>
+            }
+
         </div>
-        <p class="h2">SAMPLES</p>
+        <p className="h2">{prop.subHead}</p>
     </>
     )
 }

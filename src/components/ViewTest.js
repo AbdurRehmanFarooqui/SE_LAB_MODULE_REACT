@@ -3,44 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 
 function ViewTest(prop) {
+
     const { prescriptionId } = useParams();
-    // const url = "http://localhost:3000/prescription/1";
-
-    // const getData = async () => {
-    //     try {
-    //         const res = await fetch(url);
-    //         const data = await res.json();
-
-    //         document.getElementById('PName').textContent = data[0].PatientName;
-    //         document.getElementById('DName').textContent = data[0].DoctorName;
-    //         document.getElementById('PresID').textContent = data[0].PrescriptionID;
-    //         document.getElementById('Date').textContent = data[0].PrescriptionDate.slice(0, 10);
-
-    //         console.log(data);
-    //     } catch (error) {
-    //         // console.error("Error fetching data:", error);
-    //         console.error("Error fetching data:");
-    //     }
-    // };
-
-    // getData();
-
-    // const urlTotalCost = "http://localhost:3000/cost/1";
-
-    // const getTotalCost = async () => {
-    //     try {
-    //         const res = await fetch(urlTotalCost);
-    //         const data = await res.json();
-
-    //         document.getElementById('totalCost').textContent = data[0].TotalCost;
-    //         console.log(data);
-    //     } catch (error) {
-    //         // console.error("Error fetching total cost:", error);
-    //         console.error("Error fetching totat sdata:");
-    //     }
-    // };
-
-    // getTotalCost();
     const [prescriptionData, setPrescriptionData] = useState({});
     const [testData, setTestData] = useState([]);
     const [TotalCost, setTotalCost] = useState([]);
@@ -66,6 +30,7 @@ function ViewTest(prop) {
     }, [prescriptionId]);
 
     useEffect(() => {
+        
         const url = `http://localhost:3000/cost/${prescriptionId}`;
 
         const fetchData = async () => {
@@ -93,6 +58,9 @@ function ViewTest(prop) {
     }
     const printbut = {
         justifyContent: 'center'
+    }
+    const center = {
+        textAlign: 'center'
     }
     function printhandle() {
         window.print();
@@ -126,15 +94,20 @@ function ViewTest(prop) {
     function cancelHandle() {
         navigate("/testorder-id");
     }
+
+    function closeHandle(){
+        window.close()
+    }
     // const tests = [
     //     { testName: 'Hemoglobin A1C', testCost: '$15.00' },
     //     { testName: 'Lipid Panel', testCost: '$25.00' },
     //     { testName: 'Thyroid Function Test', testCost: '$50.00' }
     //     // Add more test data as needed
     // ];  
-    return (<div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         <div className="grow">
-            <h3>Prescription</h3>
+            <h3 style={(prop.right === 'invoice' ? center : display)}>{prop.head}</h3>
             <div className="pres_detail">
                 <div className="head_detail">
                     <div><span className="head">Patient Name:</span> <span className="detail" id="PName">{prescriptionData.PatientName}</span>
@@ -180,7 +153,8 @@ function ViewTest(prop) {
                 <button style={prop.right === 'testorder' ? display : hide} className="sec-but" onClick={cancelHandle}>CANCEL</button>
                 <button style={prop.right === 'testorder' ? display : hide} className="pri-but" onClick={openInvoiceHandle}>GENERATE INVOICE</button>
 
-                <button style={(prop.right === 'invoice' ? display : hide)} className="pri-but print_but" onClick={printhandle} id="print_but">PRINT</button>
+                <button style={(prop.right === 'invoice' ? display : hide)} className="sec-but " onClick={closeHandle} id="close_but">CANCEL</button>
+                <button style={(prop.right === 'invoice' ? display : hide)} className="pri-but " onClick={printhandle} id="print_but">PRINT</button>
             </div>
         </div>
     </div>

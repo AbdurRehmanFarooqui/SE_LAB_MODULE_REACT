@@ -92,6 +92,8 @@ body {
   width: 400px;
   /* background-color: aqua; */
   height: 100vh;
+  /* position: fixed; */
+  /* left: 0px; */
 }
 
 .logo {
@@ -113,14 +115,15 @@ body {
 }
 
 .sidebar {
-  padding: 200px 50px;
-
+  /* padding: 200px 0px 50px 50px; */
+  padding: 100px 50px;
   font-size: 2.4rem;
   width: 100%;
   box-sizing: border-box;
 }
 
 .sidebar li {
+  /* width: 100%; */
   list-style: none;
   padding: 15px 24px;
   color: #ffffff;
@@ -218,11 +221,15 @@ body {
   background-color: #A0E0C9;
   margin: 80px 0px 40px 0px;
   letter-spacing: 1px;
+  transition: .2s;
+  box-shadow: 0px 8px 15px -7px rgba(0, 0, 0, 0.281);
 }
 
 .buttonid:hover {
   background-color: #75BFA4;
   cursor: pointer;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.281);
+  /* border-radius: 20px; */
 }
 
 @media screen and (max-width: 800px) {
@@ -309,7 +316,12 @@ body {
   flex-direction: column;
   /* justify-content: space-between; */
 }
-
+.container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
 .grow {
   flex: 1;
 }
@@ -421,6 +433,8 @@ h4 {
 }
 
 .bottom_but {
+  width: 100%;
+  align-self: flex-end;
   display: flex;
   justify-content: end;
   margin-top: 20px;
@@ -428,17 +442,34 @@ h4 {
 
 .bottom_but button {
 
-  padding: 15px 35px;
-  margin: 20px;
+  padding: 12px 20px;
+  margin:  5px 20px;
   min-width: 200px;
   /* border: none; */
-  font-size: 2.4rem;
+  font-size: 2.0rem;
   font-weight: 400;
+  transition: 0.2s;
+  box-shadow: 0px 8px 15px -7px rgba(0, 0, 0, 0.281);
 }
 
 .bottom_but button:hover {
+  background-color: #fdfdfd;
+  cursor: pointer;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.281);
+  border-radius: 10px;
+  transform: scale(1.04,1.04)
+}
+button:hover {
+  background-color: #fdfdfd;
+  cursor: pointer;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.281);
+  border-radius: 10px;
+  transform: scale(1.04,1.04)
+}
+.bottom_but button:active {
   background-color: #75BFA4;
   cursor: pointer;
+  scale: 1.04;
 }
 
 .pri-but {
@@ -452,6 +483,10 @@ h4 {
   background-color: #FFFFFF;
   color: #000000;
 }
+
+
+
+
 
 
 /* Pending */
@@ -520,7 +555,8 @@ h4 {
 .samp_button{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
+  /* justify-content: center; */
 }
 .but{
   color: black;
@@ -540,28 +576,29 @@ h4 {
 }
 
 .proceed_but:hover{
-  background-color: #75BFA4;
+  /* background-color: #75BFA4; */
+  background-color: #A0E0C9;
   border-style: solid;
   border-color: #75BFA4;
   transition: 0.1s;
   cursor: pointer;
 }
 .proceed_but:active{
-  background-color: #75BFA4;
+  /* background-color: #75BFA4; */
   border-style: solid;
   border-color: #75BFA4;
   scale: 1.04;
   transition: 0s;
 }
 .delete_but:hover{
-  background-color: gray;
+  /* background-color: gray; */
   border-style: solid;
   border-color: gray;
   transition: 0.1s;
   cursor: pointer;
 }
 .delete_but:active{
-  background-color: gray;
+  /* background-color: gray; */
   border-style: solid;
   border-color: gray;
   scale: 1.04;
@@ -575,6 +612,64 @@ h4 {
 
 
 
+
+
+
+/* Test Input */
+/* Test Input */
+/* Test Input */
+/* Test Input */
+.testInputContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 15px;
+  margin-top: 25px;
+  border-width: 0px 0px 2px 0px;
+  border-style: solid none;
+  border-color: #75BFA4;
+  font-size: 1.8rem;
+  box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.123);
+  width: calc(100% - 10px);
+}
+.testInputContainer div{
+  display: flex;
+  align-items: center;
+}
+.testValueInput{
+  padding:  6px 15px;
+  font-size: 1.6rem;
+  background-color: #A0E0C9;
+  border: none;
+  color: #000000;
+  text-align: center;
+}
+.testValueInput:focus{
+  background-color: #ececec;
+  /* border: none; */
+  outline: none;
+  border-width: 0px 0px 2px 0px;
+  border-style: solid;
+  border-color: #75BFA4;
+}
+.fieldunit{
+  display: block;
+  width: 70px;
+  font-size: 1.6rem;
+  text-align: center;
+}
+::placeholder {
+  color: #ffffff;
+  opacity: 1; /* Firefox */
+}
+
+::-ms-input-placeholder { /* Edge 12 -18 */
+  color: #FFFFFF;
+}
+/* Test Input */
+/* Test Input */
+/* Test Input */
+/* Test Input */
 
 
 
@@ -724,9 +819,9 @@ h4 {
     width: 400px;
   }
 
-  .sidebar {
+  /* .sidebar {
     padding: 200px 50px;
-  }
+  } */
 
   .right_sec {
     width: calc(100% - 400px);
@@ -830,6 +925,9 @@ h4 {
   }
 
   #print_but {
+    display: none;
+  }
+  #close_but{
     display: none;
   }
 }

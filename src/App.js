@@ -6,12 +6,16 @@ import './App.css';
 import EnterID from './components/EnterID';
 import Sidebar from './components/Side';
 import RightSec from './components/RightSec';
+// import TestInput from './components/TestInput';
+// import { Navigate, useNavigate } from 'react-router-dom';
 import {
   BrowserRouter as Router,
   Routes,
-  Route
+  Route,
+  Navigate
 } from "react-router-dom";
 
+// const navigate = useNavigate();
 function App() {
   return (
     <>
@@ -22,51 +26,77 @@ function App() {
 
 
           <Route exact path="/testorder/:prescriptionId" element={
-          <>
-            <Sidebar dash='testorder'/>
-            <RightSec right='testorder' />
-          </>} />
+            <>
+              <Sidebar dash='testorder' />
+              <RightSec right='testorder' />
+            </>} />
 
 
           <Route exact path="/testorder-id" element={<>
             <Sidebar dash='testorder' />
-            <EnterID id='testorder'/>
+            <EnterID id='testorder' />
           </>} />
 
 
           <Route exact path="/invoice/:prescriptionId" element={
-          <>
-            <RightSec right='invoice' />
-          </>} />
+            <>
+              <RightSec right='invoice' />
+            </>} />
 
 
           <Route exact path="/invoice-id" element={
-          <>
-            <Sidebar dash='invoice' />
-            <EnterID id='invoice'/>
-          </>} />
+            <>
+              <Sidebar dash='invoice' />
+              <EnterID id='invoice' />
+            </>} />
 
 
           <Route exact path="/pending" element={
-          <>
-            <Sidebar dash='pending' />
-            <RightSec right='pending' />
-          </>} />
+            <>
+              <Sidebar dash='pending' />
+              <RightSec right='pending' />
+            </>} />
 
 
           <Route exact path="/inprocess" element={
-          <>
-            <Sidebar dash='inprocess' />
-            <RightSec right='inprocess' />
-          </>} />
+            <>
+              <Sidebar dash='inprocess' />
+              <RightSec right='inprocess' />
+            </>} />
 
-          <Route exact path="/ai-id" element={
-          <>
-            <Sidebar dash='ai' />
-            <EnterID id='ai'/>
-          </>} />
+          <Route exact path="/testinput/:id/:testname" element={
+            <>
+              {/* <Sidebar dash='inprocess' /> */}
+              <RightSec right='testinput' />
+            </>} />
+
+          <Route exact path="/report-id" element={
+            <>
+              <Sidebar dash='report' />
+              <EnterID id='report' />
+            </>} />
+
+            <Route exact path="/reports/:id" element={
+            <>
+              <Sidebar dash='report' />
+              <RightSec right='report' />
+            </>} />
+            <Route exact path="/reports/:id/:testname" element={
+            <>
+              {/* <Sidebar dash='report' /> */}
+              <RightSec right='reportprint' />
+            </>} />
+            
+          <Route exact path="/issue" element={
+            <>
+              <Sidebar dash='issue' />
+              <RightSec right='' />
+            </>} />
+
+          <Route exact path="/" element={<Navigate to="/testorder-id" />} />
 
         </Routes>
+
       </Router>
     </>
   );
