@@ -81,7 +81,7 @@ function App() {
               <Sidebar dash='report' />
               <RightSec right='report' />
             </>} />
-            <Route exact path="/reports/:id/:testname" element={
+            <Route exact path="/reports/:id/:testname/:checkbox" element={
             <>
               {/* <Sidebar dash='report' /> */}
               <RightSec right='reportprint' />

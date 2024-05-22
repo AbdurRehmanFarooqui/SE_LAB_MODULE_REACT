@@ -16,14 +16,12 @@ function Sample(prop) {
     // const [testname, setTestname] = useState();
 
     const proceedHandle = () => {
-        // setid(prop.testID)
-        // console.log(prop.testID)
-        // console.log(prop.testName)
-        // console.log(prop.key)
         navigate(`/testinput/${prop.testID}/${prop.testName}`)
+
     }
 
     const pendingSampHandle = async () => {
+
         const res = await fetch(`http://localhost:3000/inprogressssamplebuttton/${prop.testID}/'${prop.testName}'`, {
             method: 'POST',
             headers: {
@@ -36,10 +34,19 @@ function Sample(prop) {
         window.location.reload();
         // /testfieldsbysampleID/:sampleid/:testname
     }
-    const printReportHandle= async () => {
-        const res = await fetch(`/${prop.testID}/${prop.testName}`)
-        console.log(res)
-        navigate(`/reports/:id/:testname`)
+    const printReportHandle = async () => {
+
+        var ch = document.getElementById("ai").checked;
+        console.log(ch)
+        if (ch === true) {
+            var checkbox = 1;
+        }
+        else {
+            checkbox = 0;
+        }
+        // const res = await fetch(`/${prop.testID}/${prop.testName}`)
+        // console.log(res)
+        window.open(`/reports/${prop.testID}/${prop.testName}/${checkbox}`)
 
     }
     return (
@@ -56,6 +63,8 @@ function Sample(prop) {
                     <button className="but proceed_but" style={((prop.right === 'pending') ? display : hide)} onClick={pendingSampHandle} >SAMPLE COLLECTED</button>
 
                     <button className="but proceed_but" style={((prop.right === 'report') ? display : hide)} onClick={printReportHandle} >PRINT</button>
+
+
                     {/* { prop.right !== 'aitests' && <button className="but delete_but">DELETE</button>} */}
                     {/* style={((prop.right === 'inprocess') || (prop.right === 'pending') ? display : hide)} */}
                 </div>

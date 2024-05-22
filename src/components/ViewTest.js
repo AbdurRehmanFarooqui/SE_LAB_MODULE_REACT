@@ -143,6 +143,7 @@ function ViewTest(prop) {
                 </div>
             </div>
         </div>
+        
         <div className="total_bottom">
             <div className="break"></div>
             <div className="test_head">

@@ -30,12 +30,21 @@ function Card(prop) {
             {
                 prop.right === 'report' && <>
                     <p className="c1p1" >PRESCRIPTION ID:&nbsp;&nbsp;<span style={{ color: 'white' }} id="shift">{prop.presID}</span></p>
-                    <p className="c1p2" >PATIENT NAME:&nbsp;&nbsp;<span style={{ color: 'white' }} id="Samples">{prop.patientname}</span></p>
+                    <p className="c1p2" >PATIENT NAME:&nbsp;&nbsp;<span style={{ color: 'white' }} id="Samples">{prop.pname}</span></p>
                 </>
             }
 
         </div>
+
         <p className="h2">{prop.subHead}</p>
+        {
+            prop.right === 'report' && <>
+                <div className='askcheck'>
+                    <input type="checkbox" id="ai" name="ai" value="1" className="but proceed_but" style={((prop.right === 'report') ? display : hide)} />
+                    <label htmlFor="ai">ASK Ai</label>
+                </div>
+            </>
+        }
     </>
     )
 }

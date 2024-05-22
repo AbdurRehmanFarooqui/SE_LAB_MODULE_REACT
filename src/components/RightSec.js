@@ -10,16 +10,15 @@ function RightSec(prop) {
     const { id, testname } = useParams();
     const [data, setData] = useState([]);
     const navigate = useNavigate();
-    const [noOfSamples, setNoOfSamples] = useState(0); // Renamed setnoOfSamples to setNoOfSamples
+    const [noOfSamples, setNoOfSamples] = useState(0);
 
-    // Ref to store all input fields
     const inputsRef = useRef({});
 
-    if (prop.right === 'invoice'){
-        var head = 'INVOICE'
-    }
-    else if (prop.right === 'testorder'){
-        head = 'PRESCRIPTION'
+    let head = '';
+    if (prop.right === 'invoice') {
+        head = 'INVOICE';
+    } else if (prop.right === 'testorder') {
+        head = 'PRESCRIPTION';
     }
 
     useEffect(() => {
@@ -30,9 +29,9 @@ function RightSec(prop) {
             } else if (prop.right === "pending") {
                 url = 'http://localhost:3000/inpendingsample';
             } else if (prop.right === "testinput") {
-                url = `http://localhost:3000/testfieldsbysampleID/${id}/'${testname}'`;
-            } else if (prop.right === "askai") {
-                url = `http://localhost:3000/ask/${id}`;
+                url = `http://localhost:3000/testfieldsbysampleID/${id}/${testname}`;
+            } else if (prop.right === "report") {
+                url = `http://localhost:3000/getcompeltedtest/${id}`;
             }
 
             if (url) {
@@ -43,22 +42,22 @@ function RightSec(prop) {
                         throw new Error('Failed to fetch data');
                     }
                     const jsonData = await response.json();
-                    console.log('Fetched Data:', jsonData); // Debugging log
+                    console.log('Fetched Data:', jsonData);
                     if (Array.isArray(jsonData)) {
                         setData(jsonData);
-                        setNoOfSamples(jsonData.length); // Updated state variable name
+                        setNoOfSamples(jsonData.length);
                     } else {
                         setData([]);
-                        setNoOfSamples(0); // Updated state variable name
+                        setNoOfSamples(0);
                     }
                 } catch (error) {
                     console.error('Error fetching data: ', error);
                     setData([]);
-                    setNoOfSamples(0); // Updated state variable name
+                    setNoOfSamples(0);
                 }
             } else {
                 setData([]);
-                setNoOfSamples(0); // Updated state variable name
+                setNoOfSamples(0);
             }
         };
         fetchData();
@@ -72,62 +71,55 @@ function RightSec(prop) {
         const reportData = [];
         let isValid = true;
 
-        // Iterate over each input field
         Object.keys(inputsRef.current).forEach((fieldID) => {
             const inputElement = inputsRef.current[fieldID];
-
             if (inputElement && inputElement.value !== undefined) {
-                // Check if the input value is empty
                 if (!inputElement.value.trim()) {
                     isValid = false;
-                    // Add logic to handle empty field error (e.g., display an error message)
                     console.error(`Field with ID ${fieldID} is empty.`);
                 } else {
-                    // If the input value is not empty, add it to the reportData array
                     reportData.push({
                         sampleid: parseInt(id),
+                        testname: testname,
                         fieldid: parseInt(fieldID),
                         value: inputElement.value
-                        // value: `${inputElement.value} ${inputElement.getAttribute('data-unit')}
                     });
                 }
             }
         });
 
-        // If all fields are filled, proceed to save the report
         if (isValid) {
             console.log('Report Data:', reportData);
-            const response = await fetch("http://localhost:3000/inserttestfield", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(reportData)
-            })
-            const data = await response.json();
-            console.log(response.statusText);
-            console.log(data);
-            if (!response.ok) {
-                const error = (data && data.message) || response.status;
-                return Promise.reject(error);
+            try {
+                const response = await fetch("http://localhost:3000/inserttestfield", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(reportData)
+                });
+
+                if (!response.ok) {
+                    const error = (await response.json()).message || response.status;
+                    throw new Error(error);
+                }
+
+                const data = await response.json();
+                console.log(data);
+                cancelHandle();
+            } catch (error) {
+                console.error('Error saving report:', error);
             }
-
-            cancelHandle();
-            console.log(response);
-            console.log(data);
-
         } else {
             console.error('Please fill all required fields.');
-            alert("fill all the fields")
+            alert("Please fill all the fields");
         }
     };
 
-    // Debugging statement to track the value of noOfSamples
     console.log('Value of noOfSamples:', noOfSamples);
 
     return (
-        <section className={`right_sec ${(prop.right === "invoice") || (prop.right === "testinput") || (prop.right === "reportprint") ? 'main' : ''}`} id="main">
-            
+        <section className={`right_sec ${(prop.right === "invoice" || prop.right === "testinput" || prop.right === "reportprint") ? 'main' : ''}`} id="main">
             {(prop.right === 'invoice' || prop.right === 'testorder') && <ViewTest head={head} right={prop.right} />}
 
             {prop.right === 'pending' && <>
@@ -167,39 +159,16 @@ function RightSec(prop) {
                 </div>
             </>}
 
-
-            {prop.right === 'report' && <>
-                <Card noOfSamples={isNaN(noOfSamples) ? 0 : noOfSamples} heading={'REPORTS'} right={prop.right} subHead={'TESTS'} presID={id}/>
+            {prop.right === 'report' && data.length > 0 && <>
+                <Card noOfSamples={isNaN(noOfSamples) ? 0 : noOfSamples} pname={data[0]?.PatientName} heading={'REPORTS'} right={prop.right} subHead={'TESTS'} presID={id} />
                 <div className='samples'>
-                    {/* {Array.isArray(data) && data.map((item, index) => (
-                        <Sample key={index} testID={item.SampleID} testName={item.Testname} right={prop.right} />
-                    ))} */}
-
-                    <Sample  right={prop.right} />
-                    <Sample  right={prop.right} />
-                    <Sample  right={prop.right} />
-                    <Sample  right={prop.right} />
-                    <Sample  right={prop.right} />
-                    <Sample  right={prop.right} />
-                    <Sample  right={prop.right} />
+                    {Array.isArray(data[0]?.Samples) && data[0].Samples.map((item, index) => (
+                        <Sample right={prop.right} key={index} testID={item.SampleID} testName={item.Tests[0]?.TestName} />
+                    ))}
                 </div>
             </>}
 
-{
-    prop.right === 'reportprint' && <ReportDetail></ReportDetail>
-}
-
-
-            {/* {prop.right === 'aitests' && <>
-                <Card noOfSamples={isNaN(noOfSamples) ? 0 : noOfSamples} heading={'ASK AI'} right={prop.right} subHead={'TESTS'} />
-                <div className='samples'>
-                    {Array.isArray(data) && data.map((item, index) => (
-                        <Sample key={index} testID={item.SampleID} testName={item.Testname} right={prop.right} />
-                    ))}
-                </div>
-            </>} */}
-
-
+            {prop.right === 'reportprint' && <ReportDetail head={head} right={prop.right}></ReportDetail>}
         </section>
     );
 }

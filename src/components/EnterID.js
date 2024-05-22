@@ -51,10 +51,10 @@ function EnterID(props) {
                 nav = `/invoice/${prescriptionId}`;
             }
             else if (props.id === 'report') {
-                url = `http://localhost:3000/report/${prescriptionId}`;
+                url = `http://localhost:3000/getcompeltedtest/${prescriptionId}`;
                 nav = `/reports/${prescriptionId}`;
             }
-
+            // navigate(nav)           
             const response = await fetch(url)
 
  
@@ -75,13 +75,14 @@ function EnterID(props) {
                 setTimeout(() => { setInvalid('false') }, 3000);
                 throw new Error(`No invoice found of this Prescription-ID ${prescriptionId}`);
             }     
-            
-            setInvalid('false')
-            props.id === 'invoice' ? window.open(nav) : navigate(nav)
+            // console.log("hello")
+            setInvalid('false');
+            (props.id === 'invoice') || (props.id === 'report') ? window.open(nav) : navigate(nav)
                 // const data = await response.json();
                 // console.log('Data sent successfully:', data);
             // Handle success response from backend
         } catch (error) {
+            setInvalid("true");
             console.error('Error:', error);
             // Handle error
         }
